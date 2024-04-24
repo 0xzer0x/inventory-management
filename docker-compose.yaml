@@ -1,0 +1,5 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: dummypassword
