@@ -2,3 +2,7 @@
 spring:
   application:
     name: inventory-management
+  main:
+    banner-mode: off
+  profiles:
+    active: dev
