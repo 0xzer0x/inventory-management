@@ -1,5 +1,6 @@
 package io.fursan.inventorymanagement.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,16 +12,18 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "item")
 public class Item {
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(name = "name")
@@ -32,6 +35,6 @@ public class Item {
   @Column(name = "unit_price")
   private Double unitPrice;
 
-  @ManyToMany(mappedBy = "items")
-  private List<Supplier> supplier;
+  @ManyToMany(mappedBy = "items", cascade = CascadeType.ALL)
+  private List<Supplier> suppliers;
 }

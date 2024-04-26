@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Item List</title>
+    <!-- Include Bootstrap 5.3.3 CSS from WebJar -->
+    <link
+      href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Item List</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Suppliers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="item : ${items}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.unitPrice}"></td>
+            <td>
+              <ul>
+                <li
+                  th:each="supplier : ${item.suppliers}"
+                  th:text="${supplier.name}"
+                ></li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Include Bootstrap 5.3.3 JS and Popper.js from WebJar -->
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

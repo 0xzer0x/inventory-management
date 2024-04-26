@@ -20,5 +20,5 @@ public class ItemDto {
 
   private Double unitPrice;
 
-  private List<Supplier> supplier;
+  private List<Supplier> suppliers;
 }
