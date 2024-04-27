@@ -3,3 +3,7 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: dummypassword
+  app:
+    build: .
+    depends_on:
+      - db
