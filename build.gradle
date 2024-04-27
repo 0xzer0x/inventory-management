@@ -23,12 +23,12 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-  implementation 'org.modelmapper:modelmapper:3.2.0'
-  implementation 'org.webjars:bootstrap:5.3.3'
+    implementation 'org.modelmapper:modelmapper:3.2.0'
+    implementation 'org.webjars:bootstrap:5.3.3'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'

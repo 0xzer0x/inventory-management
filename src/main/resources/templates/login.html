@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Please Log In</title>
+    <link
+            href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center">Login Page</h3>
+                    <div
+                            class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
+                            th:if="${param.error}"
+                    >
+                        Incorrect username or password
+                    </div>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="username"
+                                    name="name"
+                                    placeholder="Enter username"
+                                    required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                            />
+                        </div>
+                        <div class="d-grid pt-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
