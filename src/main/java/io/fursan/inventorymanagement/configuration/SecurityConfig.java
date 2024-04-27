@@ -27,7 +27,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/webjars/**").permitAll()
+                        .anyRequest().authenticated() //temporarily here to make everything work
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
