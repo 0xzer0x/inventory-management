@@ -1,32 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
+  <head>
     <title>Please Log In</title>
     <!-- Include Bootstrap CSS -->
     <link
-            href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
-            rel="stylesheet"
+      href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
     />
-</head>
-<body>
-<div class="container">
-    <h1 class="text-center my-4">Please Log In</h1>
-    <div th:if="${param.error}" class="alert alert-danger">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}" class="alert alert-success">
-        You have been logged out.
-    </div>
-    <form th:action="@{/login}" method="post" class="form-group">
-        <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="Username"/>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="text-center">Login Page</h3>
+              <div
+                class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
+                th:if="${param.error}"
+              >
+                Incorrect username or password
+              </div>
+              <div
+                class="p-3 text-warning-emphasis bg-warning-subtle border rounded border-danger-subtle"
+                th:if="${param.logout}"
+              >
+                You have been logged out
+              </div>
+              <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                  <label for="usernameInput">Username</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="usernameInput"
+                    name="username"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="passwordField">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="passwordField"
+                    name="password"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <div class="d-grid pt-3">
+                  <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password"/>
-        </div>
-        <input type="submit" value="Log in" class="btn btn-primary"/>
-    </form>
-</div>
-<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-</body>
+      </div>
+    </div>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
