@@ -3,11 +3,15 @@ package io.fursan.inventorymanagement.controller;
 import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.mapper.impl.ItemMapper;
 import io.fursan.inventorymanagement.service.ItemService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,12 +34,24 @@ public class ItemController {
   }
 
   @GetMapping("/save")
-  public String saveItem(@RequestParam(required = false) Optional<Integer> id, Model model) {
+  public String showSaveItemForm(
+      @RequestParam(required = false) Optional<Integer> id, Model model) {
     model.addAttribute(
         "item",
         id.map(itemId -> itemService.findById(itemId).orElse(null))
             .map(itemMapper::mapTo)
             .orElse(new ItemDto()));
     return "items/save-item";
+  }
+
+  @PostMapping("/save")
+  public String saveItem(
+      @Valid @ModelAttribute(name = "item") ItemDto itemDto, BindingResult result) {
+    if (result.hasErrors()) {
+      return "items/save-item";
+    }
+
+    itemService.save(itemMapper.mapFrom(itemDto));
+    return "redirect:/items";
   }
 }
