@@ -1,7 +1,8 @@
 FROM openjdk:21
 
 LABEL version="0.0.1" \
-  description="An inventory management system using Spring MVC with Thymeleaf and Bootstrap CSS."
+  org.opencontainers.image.source="https://github.com/0xzer0x/inventory-management" \
+  org.opencontainers.image.description="An inventory management system using Spring MVC with Thymeleaf and Bootstrap CSS."
 
 ADD . /app
 
