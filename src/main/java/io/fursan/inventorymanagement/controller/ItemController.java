@@ -4,10 +4,13 @@ import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.mapper.impl.ItemMapper;
 import io.fursan.inventorymanagement.service.ItemService;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/items")
@@ -26,4 +29,10 @@ public class ItemController {
     model.addAttribute("items", itemDtos);
     return "items/list-items";
   }
+
+  @GetMapping("/delete")
+    public String deleteById(@RequestParam(name="id") Integer id){
+        itemService.deleteById(id);
+        return "redirect:/items";
+    }
 }
