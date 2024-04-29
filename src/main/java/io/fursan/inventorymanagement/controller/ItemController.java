@@ -54,4 +54,10 @@ public class ItemController {
     itemService.save(itemMapper.mapFrom(itemDto));
     return "redirect:/items";
   }
+
+  @GetMapping("/delete")
+    public String deleteById(@RequestParam(name="id") Integer id){
+        itemService.deleteById(id);
+        return "redirect:/items";
+    }
 }
