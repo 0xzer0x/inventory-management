@@ -13,62 +13,56 @@
       <h1>Update Item</h1>
       <form
         action="#"
-        th:action="@{/updateItem}"
+        th:action="@{/items/save}"
         th:object="${item}"
         method="post"
       >
-        <div class="form-group">
-          <label for="id">ID</label>
-          <input
-            type="text"
-            class="form-control"
-            id="id"
-            th:field="*{id}"
-            readonly
-          />
-        </div>
+        <input type="hidden" th:field="*{id}" readonly />
         <div class="form-group">
           <label for="name">Name</label>
           <input
+            required
             type="text"
             class="form-control"
             id="name"
             th:field="*{name}"
           />
-          <span
+          <div
             th:if="${#fields.hasErrors('name')}"
-            th:errors="*{quantity}"
-            class="error"
-          ></span>
+            class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
+            th:errors="*{name}"
+          ></div>
         </div>
         <div class="form-group">
           <label for="quantity">Quantity</label>
           <input
+            required
             type="number"
             class="form-control"
             id="quantity"
             th:field="*{quantity}"
           />
-          <span
+          <div
             th:if="${#fields.hasErrors('quantity')}"
+            class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
             th:errors="*{quantity}"
-            class="error"
-          ></span>
+          ></div>
         </div>
         <div class="form-group">
           <label for="unitPrice">Unit Price</label>
           <input
+            required
             type="number"
             step="0.01"
             class="form-control"
             id="unitPrice"
             th:field="*{unitPrice}"
           />
-          <span
+          <div
             th:if="${#fields.hasErrors('unitPrice')}"
+            class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
             th:errors="*{unitPrice}"
-            class="error"
-          ></span>
+          ></div>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
