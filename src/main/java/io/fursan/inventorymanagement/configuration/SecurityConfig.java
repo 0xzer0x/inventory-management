@@ -36,7 +36,8 @@ public class SecurityConfig {
   @Bean
   @Order(1)
   public SecurityFilterChain unauthenticatedFilterChain(HttpSecurity http) throws Exception {
-    http.securityMatchers(matcher -> matcher.requestMatchers("/login", "/webjars/**"))
+    http.securityMatchers(
+            matcher -> matcher.requestMatchers("/login", "/webjars/**", "/static/**", "/error"))
         .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
     return useCustomAuthentication(http).build();
   }
@@ -63,9 +64,15 @@ public class SecurityConfig {
   @Bean
   @Order(4)
   public SecurityFilterChain authorizationFilterChain(HttpSecurity http) throws Exception {
-    http.securityMatchers(matcher -> matcher.requestMatchers("/items"))
-        .authorizeHttpRequests(
-            authorize -> authorize.requestMatchers(HttpMethod.GET).authenticated());
+    http.authorizeHttpRequests(
+        authorize ->
+            authorize
+                .requestMatchers(HttpMethod.GET, "/", "/items")
+                .authenticated()
+                .requestMatchers("/items/save", "/suppliers/save")
+                .hasAnyRole("EMPLOYEE", "ADMIN")
+                .requestMatchers("/items/delete", "/suppliers/delete")
+                .hasRole("ADMIN"));
     return useCustomAuthentication(http).build();
   }
 }

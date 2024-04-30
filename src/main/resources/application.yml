@@ -4,5 +4,7 @@ spring:
     name: inventory-management
   main:
     banner-mode: off
+  mvc:
+    static-path-pattern: /static/**
   profiles:
     active: dev
