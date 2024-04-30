@@ -1,14 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Item List</title>
-    <!-- Include Bootstrap 5.3.3 CSS from WebJar -->
-    <link
-      href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
+  <head th:replace="~{fragments/header :: header('Item List')}"> </head>
   <body>
+    <nav th:replace="~{fragments/header :: navbar('items')}"></nav>
     <div class="container">
       <h1>Item List</h1>
       <table class="table table-striped">
@@ -39,8 +33,6 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Include Bootstrap 5.3.3 JS and Popper.js from WebJar -->
-    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script th:replace"~{fragments/footer :: bootstrap-js}"></script>
   </body>
 </html>
