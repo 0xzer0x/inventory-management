@@ -13,6 +13,7 @@
             <th>Quantity</th>
             <th>Unit Price</th>
             <th>Suppliers</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +29,21 @@
                   th:text="${supplier.name}"
                 ></li>
               </ul>
+            </td>
+            <td>
+              <a
+                      class="btn btn-primary"
+                      sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
+                      th:href="@{/items/save(id=${item.id})}">
+                      Update
+                </a>
+
+              <a
+                class="btn btn-danger"
+                sec:authorize="hasRole('ROLE_ADMIN')"
+                th:href="@{/items/delete(id=${item.id})}">
+                Delete
+              </a>
             </td>
           </tr>
         </tbody>
