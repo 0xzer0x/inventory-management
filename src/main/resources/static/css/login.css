@@ -1,0 +1,16 @@
+
+body {
+    background-color: #F5F5F5;
+    /*background-color: #343a40; This will be for dark mode. */
+}
+
+.dark-black-bg {
+    background-color: #FFFFFF;
+    /*background-color: #a9a9a9; This will be for dark mode.*/
+}
+
+.borderless-input {
+    background: transparent;
+    border: none;
+    border-bottom: 4px solid #20406e;
+}
