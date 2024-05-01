@@ -10,31 +10,46 @@
   </head>
   <nav
     th:fragment="navbar(active)"
-    class="navbar bd-navbar navbar-expand-lg mb-3 p-1 bg-body-tertiary container-fluid"
+    class="navbar navbar-expand-lg bg-body-tertiary"
   >
     <div class="container">
       <a href="#" class="navbar-brand m-1">IMS</a>
-      <div class="collapse navbar-collapse d-flex">
-        <ul class="navbar-nav flex-grow-1">
+      <button
+        class="navbar-toggler collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a
-              href="/"
               th:class="'nav-link' + (${active} == 'home' ? ' active' : '')"
-              >Home</a
+              th:aria-current="${active} == 'home' ? 'page' : _"
+              href="/"
             >
+              Home
+            </a>
           </li>
           <li class="nav-item">
             <a
-              href="/items"
               th:class="'nav-link' + (${active} == 'items' ? ' active' : '')"
+              th:aria-current="${active} == 'items' ? 'page' : _"
+              href="/items"
             >
               Items
             </a>
           </li>
           <li class="nav-item">
             <a
-              href="/suppliers"
               th:class="'nav-link' + (${active} == 'suppliers' ? ' active' : '')"
+              th:aria-current="${active} == 'suppliers' ? 'page' : _"
+              href="/suppliers"
             >
               Suppliers
             </a>

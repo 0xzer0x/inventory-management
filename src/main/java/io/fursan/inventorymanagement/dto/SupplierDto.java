@@ -1,16 +1,17 @@
 package io.fursan.inventorymanagement.dto;
 
-import io.fursan.inventorymanagement.entity.Item;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +26,26 @@ public class SupplierDto {
   @NotNull(message = "Phone number cannot be empty")
   private String phoneNumber;
 
-  private List<Item> items;
+  private List<ItemDto> items;
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    return this.id == ((SupplierDto) obj).getId();
+  }
+
+  @Override
+  public String toString() {
+    return "SupplierDto [id="
+        + id
+        + ", name="
+        + name
+        + ", email="
+        + email
+        + ", phoneNumber="
+        + phoneNumber
+        + "]";
+  }
 }

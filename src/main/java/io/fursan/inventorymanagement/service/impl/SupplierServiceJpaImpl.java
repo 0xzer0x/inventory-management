@@ -1,9 +1,10 @@
 package io.fursan.inventorymanagement.service.impl;
 
-import io.fursan.inventorymanagement.repository.SupplierRepository;
-import io.fursan.inventorymanagement.service.SupplierService;
+import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.entity.Supplier;
-
+import io.fursan.inventorymanagement.repository.SupplierRepository;
+import io.fursan.inventorymanagement.service.ItemService;
+import io.fursan.inventorymanagement.service.SupplierService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SupplierServiceJpaImpl implements SupplierService {
   private SupplierRepository supplierRepository;
+  private ItemService itemService;
 
   public SupplierServiceJpaImpl(SupplierRepository supplierRepository) {
     this.supplierRepository = supplierRepository;
@@ -19,6 +21,11 @@ public class SupplierServiceJpaImpl implements SupplierService {
   @Override
   public List<Supplier> findAll() {
     return supplierRepository.findAll();
+  }
+
+  @Override
+  public List<Supplier> findAllByItemsContaining(Item item) {
+    return supplierRepository.findAllByItemsContaining(item);
   }
 
   @Override
@@ -54,8 +61,13 @@ public class SupplierServiceJpaImpl implements SupplierService {
 
   @Override
   public void deleteById(int id) {
-    supplierRepository.deleteById(id);
+    supplierRepository
+        .findById(id)
+        .ifPresent(
+            supplier -> {
+              List<Item> suppliedItems = itemService.findAllBySuppliersContaining(supplier);
+              suppliedItems.forEach(suppliedItem -> suppliedItem.getSuppliers().remove(supplier));
+              supplierRepository.deleteById(id);
+            });
   }
-
-
 }
