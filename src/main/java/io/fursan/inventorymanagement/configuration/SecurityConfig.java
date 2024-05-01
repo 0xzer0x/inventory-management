@@ -67,7 +67,7 @@ public class SecurityConfig {
     http.authorizeHttpRequests(
         authorize ->
             authorize
-                .requestMatchers(HttpMethod.GET, "/", "/items")
+                .requestMatchers(HttpMethod.GET, "/", "/items", "/suppliers")
                 .authenticated()
                 .requestMatchers("/items/save", "/suppliers/save")
                 .hasAnyRole("EMPLOYEE", "ADMIN")
