@@ -56,8 +56,8 @@ public class ItemController {
   }
 
   @GetMapping("/delete")
-    public String deleteById(@RequestParam(name="id") Integer id){
-        itemService.deleteById(id);
-        return "redirect:/items";
-    }
+  public String deleteById(@RequestParam(name = "id") Integer id) {
+    itemService.deleteById(id);
+    return "redirect:/items";
+  }
 }
