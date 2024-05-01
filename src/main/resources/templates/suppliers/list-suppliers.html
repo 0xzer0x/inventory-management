@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments/header :: header('Supplier List')}"> </head>
+  <body>
+    <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>
+    <div class="container">
+      <h1>Supplier List</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Items</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="supplier : ${suppliers}">
+            <td th:text="${supplier.id}"></td>
+            <td th:text="${supplier.name}"></td>
+            <td th:text="${supplier.email}"></td>
+            <td th:text="${supplier.phoneNumber}"></td>
+            <td>
+              <ul>
+                <li
+                  th:each="item : ${supplier.items}"
+                  th:text="${item.name}"
+                ></li>
+              </ul>
+            </td>
+            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              <a
+                class="btn btn-primary"
+                th:href="@{/suppliers/save(id=${supplier.id})}"
+              >
+                Update
+              </a>
+              <a
+                class="btn btn-danger"
+                sec:authorize="hasRole('ROLE_ADMIN')"
+                th:href="@{/suppliers/delete(id=${supplier.id})}"
+              >
+                Delete
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex flex-row">
+        <a
+          sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
+          th:href="@{/suppliers/save}"
+          class="btn btn-success"
+        >
+          Add
+        </a>
+      </div>
+    </div>
+    <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
+  </body>
+</html>
