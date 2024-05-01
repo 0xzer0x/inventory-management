@@ -1,6 +1,5 @@
 package io.fursan.inventorymanagement.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +34,6 @@ public class Item {
   @Column(name = "unit_price")
   private Double unitPrice;
 
-  @ManyToMany(mappedBy = "items", cascade = CascadeType.ALL)
+  @ManyToMany(mappedBy = "items")
   private List<Supplier> suppliers;
 }
