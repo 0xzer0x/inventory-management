@@ -2,6 +2,7 @@ package io.fursan.inventorymanagement.service.impl;
 
 import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.entity.Supplier;
+import io.fursan.inventorymanagement.repository.ItemRepository;
 import io.fursan.inventorymanagement.repository.SupplierRepository;
 import io.fursan.inventorymanagement.service.ItemService;
 import io.fursan.inventorymanagement.service.SupplierService;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SupplierServiceJpaImpl implements SupplierService {
   private SupplierRepository supplierRepository;
-  private ItemService itemService;
+  private ItemRepository itemRepository;
 
-  public SupplierServiceJpaImpl(SupplierRepository supplierRepository) {
+  public SupplierServiceJpaImpl(SupplierRepository supplierRepository, ItemRepository itemRepository) {
     this.supplierRepository = supplierRepository;
+    this.itemRepository = itemRepository;
   }
 
   @Override
@@ -65,7 +67,7 @@ public class SupplierServiceJpaImpl implements SupplierService {
         .findById(id)
         .ifPresent(
             supplier -> {
-              List<Item> suppliedItems = itemService.findAllBySuppliersContaining(supplier);
+              List<Item> suppliedItems = itemRepository.findAllBySuppliersContaining(supplier);
               suppliedItems.forEach(suppliedItem -> suppliedItem.getSuppliers().remove(supplier));
               supplierRepository.deleteById(id);
             });
