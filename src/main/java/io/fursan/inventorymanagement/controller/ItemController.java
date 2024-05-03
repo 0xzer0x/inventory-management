@@ -35,7 +35,7 @@ public class ItemController {
 
   @GetMapping("/save")
   public String showSaveItemForm(
-      @RequestParam(required = false) Optional<Integer> id, Model model) {
+      @RequestParam(required = false, name = "id") Optional<Integer> id, Model model) {
     model.addAttribute(
         "item",
         id.map(itemId -> itemService.findById(itemId).orElse(null))
