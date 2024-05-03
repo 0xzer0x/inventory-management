@@ -47,7 +47,7 @@ public class SupplierController {
 
   @GetMapping("/save")
   public String showSupplierSaveForm(
-      @RequestParam(required = false) Optional<Integer> id, Model model) {
+      @RequestParam(required = false, name = "id") Optional<Integer> id, Model model) {
     List<ItemDto> itemDtos = itemService.findAll().stream().map(itemMapper::mapTo).toList();
     model.addAttribute("items", itemDtos);
     model.addAttribute(
@@ -68,4 +68,11 @@ public class SupplierController {
     supplierService.save(supplierMapper.mapFrom(supplierDto));
     return "redirect:/suppliers";
   }
+
+  @GetMapping("/delete")
+  public String deleteById(@RequestParam(name = "id") Integer id) {
+    supplierService.deleteById(id);
+    return "redirect:/suppliers";
+  }
 }
+
