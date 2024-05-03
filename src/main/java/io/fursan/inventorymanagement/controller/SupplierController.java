@@ -37,6 +37,10 @@ public class SupplierController {
     this.itemMapper = itemMapper;
   }
 
+  private List<ItemDto> itemDtos() {
+    return itemService.findAll().stream().map(itemMapper::mapTo).toList();
+  }
+
   @GetMapping
   public String getSuppliers(Model model) {
     List<SupplierDto> supplierDtos =
@@ -48,8 +52,7 @@ public class SupplierController {
   @GetMapping("/save")
   public String showSupplierSaveForm(
       @RequestParam(required = false, name = "id") Optional<Integer> id, Model model) {
-    List<ItemDto> itemDtos = itemService.findAll().stream().map(itemMapper::mapTo).toList();
-    model.addAttribute("items", itemDtos);
+    model.addAttribute("items", itemDtos());
     model.addAttribute(
         "supplier",
         id.map(supplierId -> supplierService.findById(supplierId).orElse(null))
@@ -60,8 +63,11 @@ public class SupplierController {
 
   @PostMapping("/save")
   public String saveSupplier(
-      @Valid @ModelAttribute(name = "supplier") SupplierDto supplierDto, BindingResult result) {
+      @Valid @ModelAttribute(name = "supplier") SupplierDto supplierDto,
+      BindingResult result,
+      Model model) {
     if (result.hasErrors()) {
+      model.addAttribute("items", itemDtos());
       return "suppliers/save-supplier";
     }
 
@@ -75,4 +81,3 @@ public class SupplierController {
     return "redirect:/suppliers";
   }
 }
-

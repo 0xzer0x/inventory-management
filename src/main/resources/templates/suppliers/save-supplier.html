@@ -10,6 +10,7 @@
         th:object="${supplier}"
         method="post"
       >
+        <input type="hidden" th:field="*{id}" />
         <div class="form-group">
           <label for="name">Name:</label>
           <input
@@ -49,7 +50,6 @@
               th:each="item : ${items}"
               th:value="${item.id}"
               th:text="${item.name}"
-              th:selected="${#lists.contains(supplier.items, item)}"
             >
               Item Name
             </option>
