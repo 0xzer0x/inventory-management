@@ -6,6 +6,7 @@ import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.service.ItemService;
 import io.fursan.inventorymanagement.service.SupplierService;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -154,9 +155,8 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatItemsSavePersistsItemInDatabase() throws Exception {
+  public void testThatSavePersistsItemInDatabase() throws Exception {
     Item item = Item.builder().id(1).name("test").quantity(10L).unitPrice(200.5).build();
-    // no parameter
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/items/save")
@@ -171,5 +171,18 @@ public class ItemControllerIntegrationTests {
     Assertions.assertThat(insertedItem.getName()).isEqualTo(item.getName());
     Assertions.assertThat(insertedItem.getQuantity()).isEqualTo(item.getQuantity());
     Assertions.assertThat(insertedItem.getUnitPrice()).isEqualTo(item.getUnitPrice());
+  }
+
+  @Test
+  @WithMockUser(
+      username = "admin",
+      password = "admin",
+      roles = {"ADMIN"})
+  public void testThatDeleteRemovesItemFromDatabase() throws Exception {
+    mockMvc
+        .perform(MockMvcRequestBuilders.get("/items/delete").param("id", "1"))
+        .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+    Optional<Item> removedItem = itemService.findById(1);
+    Assertions.assertThat(removedItem).isEmpty();
   }
 }
