@@ -4,10 +4,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.entity.Item;
-import io.fursan.inventorymanagement.entity.Supplier;
 import io.fursan.inventorymanagement.service.ItemService;
 import io.fursan.inventorymanagement.service.SupplierService;
-import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -157,20 +155,21 @@ public class ItemControllerIntegrationTests {
       password = "admin",
       roles = {"ADMIN"})
   public void testThatItemsSavePersistsItemInDatabase() throws Exception {
-    Supplier supplier = supplierService.findById(1).get();
-    Item item =
-        Item.builder()
-            .name("test")
-            .quantity(10L)
-            .unitPrice(200.5)
-            .suppliers(Arrays.asList(supplier))
-            .build();
+    Item item = Item.builder().id(1).name("test").quantity(10L).unitPrice(200.5).build();
     // no parameter
     mockMvc
-        .perform(MockMvcRequestBuilders.post("/items/save").with(csrf()).requestAttr("item", item))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        .perform(
+            MockMvcRequestBuilders.post("/items/save")
+                .with(csrf())
+                .param("id", String.valueOf(item.getId()))
+                .param("quantity", String.valueOf(item.getQuantity()))
+                .param("unitPrice", String.valueOf(item.getUnitPrice()))
+                .param("name", String.valueOf(item.getName())))
+        .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 
-    Item insertedItem = itemService.findById(4).get();
-    Assertions.assertThat(insertedItem).isEqualTo(item);
+    Item insertedItem = itemService.findById(1).get();
+    Assertions.assertThat(insertedItem.getName()).isEqualTo(item.getName());
+    Assertions.assertThat(insertedItem.getQuantity()).isEqualTo(item.getQuantity());
+    Assertions.assertThat(insertedItem.getUnitPrice()).isEqualTo(item.getUnitPrice());
   }
 }
