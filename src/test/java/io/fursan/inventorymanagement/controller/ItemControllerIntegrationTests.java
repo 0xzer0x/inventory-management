@@ -5,7 +5,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.service.ItemService;
-import io.fursan.inventorymanagement.service.SupplierService;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,14 +28,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ItemControllerIntegrationTests {
   private MockMvc mockMvc;
   private ItemService itemService;
-  private SupplierService supplierService;
 
   @Autowired
-  public ItemControllerIntegrationTests(
-      MockMvc mockMvc, ItemService itemService, SupplierService supplierService) {
+  public ItemControllerIntegrationTests(MockMvc mockMvc, ItemService itemService) {
     this.mockMvc = mockMvc;
     this.itemService = itemService;
-    this.supplierService = supplierService;
   }
 
   @Test
@@ -44,7 +40,7 @@ public class ItemControllerIntegrationTests {
       username = "user",
       password = "user",
       roles = {"USER"})
-  public void testThatGetitemsReturnsHttp200() throws Exception {
+  public void testThatGetItemsReturnsHttp200() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items"))
         .andExpect(MockMvcResultMatchers.status().isOk());
@@ -55,7 +51,7 @@ public class ItemControllerIntegrationTests {
       username = "user",
       password = "user",
       roles = {"USER"})
-  public void testThatGetitemsReturnsCorrectView() throws Exception {
+  public void testThatGetItemsReturnsCorrectView() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items"))
         .andExpect(MockMvcResultMatchers.view().name("items/list-items"));
@@ -66,7 +62,7 @@ public class ItemControllerIntegrationTests {
       username = "user",
       password = "user",
       roles = {"USER"})
-  public void testThatGetitemsReturnsModelContainingItemsAttribute() throws Exception {
+  public void testThatGetItemsReturnsModelContainingItemsAttribute() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items"))
         .andExpect(MockMvcResultMatchers.model().attributeExists("items"));
@@ -77,7 +73,7 @@ public class ItemControllerIntegrationTests {
       username = "user",
       password = "user",
       roles = {"USER"})
-  public void testThatItemsSaveIsNotAccessibleToUsers() throws Exception {
+  public void testThatSaveItemIsNotAccessibleToUsers() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.status().isForbidden());
@@ -88,7 +84,7 @@ public class ItemControllerIntegrationTests {
       username = "employee",
       password = "employee",
       roles = {"EMPLOYEE"})
-  public void testThatItemsSaveIsAccessibleToEmployees() throws Exception {
+  public void testThatSaveItemIsAccessibleToEmployees() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.status().isOk());
@@ -99,7 +95,7 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatItemsSaveIsAccessibleToAdmins() throws Exception {
+  public void testThatSaveItemIsAccessibleToAdmins() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.status().isOk());
@@ -110,7 +106,7 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatItemsSaveReturnsCorrectView() throws Exception {
+  public void testThatSaveItemReturnsCorrectView() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.view().name("items/save-item"));
@@ -121,7 +117,7 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatItemsSaveReturnsModelContainingItemAttribute() throws Exception {
+  public void testThatSaveItemReturnsModelContainingItemAttribute() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.model().attributeExists("item"));
@@ -132,13 +128,18 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatItemsSaveReturnsCorrectItem() throws Exception {
-    // no parameter
+  public void testThatSaveItemNoParameterReturnsEmptyItemAttribute() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/save"))
         .andExpect(MockMvcResultMatchers.model().attribute("item", new ItemDto()));
+  }
 
-    // with id parameter
+  @Test
+  @WithMockUser(
+      username = "admin",
+      password = "admin",
+      roles = {"ADMIN"})
+  public void testThatSaveItemWithParameterReturnsCorrectItemAttribute() throws Exception {
     Item item = itemService.findById(1).get();
     ModelAndView modelAndView =
         mockMvc
@@ -155,7 +156,7 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatSavePersistsItemInDatabase() throws Exception {
+  public void testThatSaveItemPersistsItemInDatabase() throws Exception {
     Item item = Item.builder().id(1).name("test").quantity(10L).unitPrice(200.5).build();
     mockMvc
         .perform(
@@ -164,7 +165,7 @@ public class ItemControllerIntegrationTests {
                 .param("id", String.valueOf(item.getId()))
                 .param("quantity", String.valueOf(item.getQuantity()))
                 .param("unitPrice", String.valueOf(item.getUnitPrice()))
-                .param("name", String.valueOf(item.getName())))
+                .param("name", item.getName()))
         .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 
     Item insertedItem = itemService.findById(1).get();
@@ -178,7 +179,7 @@ public class ItemControllerIntegrationTests {
       username = "admin",
       password = "admin",
       roles = {"ADMIN"})
-  public void testThatDeleteRemovesItemFromDatabase() throws Exception {
+  public void testThatDeleteItemRemovesItemFromDatabase() throws Exception {
     mockMvc
         .perform(MockMvcRequestBuilders.get("/items/delete").param("id", "1"))
         .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
