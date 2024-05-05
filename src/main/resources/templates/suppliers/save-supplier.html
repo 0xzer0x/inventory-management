@@ -1,21 +1,57 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{fragments/header :: header('Update Supplier')}"> </head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header('Supplier List')}">
+</head>
   <body>
-    <div class="container">
-      <h2 class="text-center">Update Supplier</h2>
+  <style>
+    .page-container {
+      margin-top: 15px;
+      background-color: #F8F9FA;
+      padding-bottom: 10px;
+    }
+    .both-halves {
+      display: inline-flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 30px;
+    }
+    .first-half {
+      width:48%;
+      /*height: 100vh;*/
+    }
+    .second-half {
+      width: 48%;
+      /*height: 100vh;*/
+    }
+    .info-input {
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    .update-button {
+      margin-right: 27px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+  </style>
+    <div class="container page-container rounded-3">
+      <div style="display: flex; justify-content: space-between;">
+      <h2 class="text-lg-start" style="margin-left: 28px; margin-top: 10px;">Update Supplier</h2>
+        <button type="submit" class="update-button btn btn-primary">Update</button>
+      </div>
       <form
         action="#"
         th:action="@{/suppliers/save}"
         th:object="${supplier}"
         method="post"
       >
+        <div class="both-halves" style="display: inline-flex;">
+        <div class="first-half">
         <input type="hidden" th:field="*{id}" />
         <div class="form-group">
           <label for="name">Name:</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control info-input"
             id="name"
             th:field="*{name}"
           />
@@ -24,7 +60,7 @@
           <label for="email">Email:</label>
           <input
             type="email"
-            class="form-control"
+            class="form-control info-input"
             id="email"
             th:field="*{email}"
           />
@@ -33,14 +69,17 @@
           <label for="phoneNumber">Phone Number:</label>
           <input
             type="tel"
-            class="form-control"
+            class="form-control info-input"
             id="phoneNumber"
             th:field="*{phoneNumber}"
           />
         </div>
+        </div>
+          <div class="second-half">
         <div class="form-group">
           <label for="items">Items:</label>
           <select
+                  style="height: 225px;"
             class="form-control selectpicker"
             id="items"
             multiple
@@ -55,7 +94,8 @@
             </option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+        </div>
       </form>
     </div>
     <script th:replace="~{fragments/footer :: bootstrap-js}"></script>

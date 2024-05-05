@@ -1,11 +1,41 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{fragments/header :: header('Supplier List')}"> </head>
+  <head th:replace="~{fragments/header :: header('Supplier List')}">
+  </head>
   <body>
+  <style>
+    .page-container {
+      background-color: #F8F9FA;
+      padding-bottom: 10px;
+    }
+    .plus-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      border-bottom: solid 5px #198754;
+      color: white;
+      font-size: 35px;
+      margin-left: 15px;
+      margin-top: 10px;
+      position: relative;
+      vertical-align: top;
+    }
+  </style>
     <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>
-    <div class="container">
-      <h1>Supplier List</h1>
-      <table class="table table-striped">
+    <div class="container page-container rounded-3">
+      <div style="display: inline-flex;">
+      <h1 style="color:#000000;">Supplier List</h1>
+      <a
+              sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
+              th:href="@{/suppliers/save}"
+              class="btn btn-success plus-icon"
+      >
+        +
+      </a>
+        </div>
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th>ID</th>
@@ -50,15 +80,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="d-flex flex-row">
-        <a
-          sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
-          th:href="@{/suppliers/save}"
-          class="btn btn-success"
-        >
-          Add
-        </a>
-      </div>
     </div>
     <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
   </body>
