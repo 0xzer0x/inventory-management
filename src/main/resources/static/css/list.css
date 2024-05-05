@@ -1,0 +1,24 @@
+.page-container {
+    background-color: #F8F9FA;
+    padding-bottom: 10px;
+}
+.plus-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-bottom: solid 5px #198754;
+    color: white;
+    font-size: 35px;
+    margin-left: 15px;
+    margin-top: 10px;
+    position: relative;
+    vertical-align: top;
+}
+h1 {
+    color:#000000;
+}
+.why-am-i-doing-this {
+    display: inline-flex;
+}

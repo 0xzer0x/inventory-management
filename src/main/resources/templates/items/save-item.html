@@ -1,23 +1,50 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{fragments/header :: header('Update Item')}"> </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Update Item</title>
+  <link
+          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          type="text/css"
+          media="all"
+          href="/static/css/save-item.css"
+  />
+</head>
   <body>
-    <nav th:replace="~{fragments/header :: navbar('items')}"></nav>
-    <div class="container">
-      <h1>Update Item</h1>
+<!--    <nav th:replace="~{fragments/header :: navbar('items')}"></nav>-->
+    <div class="container page-container rounded-3">
+      <div class="title-and-buttons">
+        <h2 class="text-lg-start">Update Item</h2>
+        <div class="update-and-cancel">
+        <button type="submit" form="save-form" class="update-button btn btn-primary">Update</button>
+          <a
+                  th:href="@{/items}"
+                  class="btn btn-danger"
+          >
+            Cancel
+          </a>
+          </div>
+      </div>
       <form
         action="#"
         th:action="@{/items/save}"
         th:object="${item}"
         method="post"
+        id="save-form"
       >
+        <div class="all-the-inputs">
         <input type="hidden" th:field="*{id}" readonly />
         <div class="form-group">
           <label for="name">Name</label>
           <input
             required
             type="text"
-            class="form-control"
+            class="form-control info-input"
             id="name"
             th:field="*{name}"
           />
@@ -32,7 +59,7 @@
           <input
             required
             type="number"
-            class="form-control"
+            class="form-control info-input"
             id="quantity"
             th:field="*{quantity}"
           />
@@ -48,7 +75,7 @@
             required
             type="number"
             step="0.01"
-            class="form-control"
+            class="form-control info-input"
             id="unitPrice"
             th:field="*{unitPrice}"
           />
@@ -58,7 +85,7 @@
             th:errors="*{unitPrice}"
           ></div>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        </div>
       </form>
     </div>
 
