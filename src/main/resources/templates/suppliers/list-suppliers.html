@@ -1,32 +1,25 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{fragments/header :: header('Supplier List')}">
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supplier List</title>
+  <link
+          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          type="text/css"
+          media="all"
+          href="/static/css/list.css"
+  />
+</head>
   <body>
-  <style>
-    .page-container {
-      background-color: #F8F9FA;
-      padding-bottom: 10px;
-    }
-    .plus-icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 35px;
-      height: 35px;
-      border-bottom: solid 5px #198754;
-      color: white;
-      font-size: 35px;
-      margin-left: 15px;
-      margin-top: 10px;
-      position: relative;
-      vertical-align: top;
-    }
-  </style>
     <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>
     <div class="container page-container rounded-3">
-      <div style="display: inline-flex;">
-      <h1 style="color:#000000;">Supplier List</h1>
+      <div class="why-am-i-doing-this">
+      <h1>Supplier List</h1>
       <a
               sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
               th:href="@{/suppliers/save}"
