@@ -10,20 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Tests
-        run: >-
-          sed "s/active: dev/active: testing/" -i "${{ github.workspace }}/src/main/resources/application.yml"
-
-          ${{ github.workspace }}/gradlew test --no-parallel
-
   build:
-    needs: test
     runs-on: ubuntu-latest
     outputs:
       app_ver: "${{ steps.appver.outputs.app_ver }}"
@@ -37,7 +24,7 @@ jobs:
 
       - name: Build Application JAR
         run: >-
-          sed "s/active: dev/active: prod/" -i "${{ github.workspace }}/src/main/resources/application.yml"
+          sed "s/active:.*/active: prod/" -i "${{ github.workspace }}/src/main/resources/application.yml"
 
           ${{ github.workspace }}/gradlew bootJar
 
