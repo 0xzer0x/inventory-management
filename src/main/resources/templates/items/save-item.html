@@ -21,7 +21,7 @@
       <div class="title-and-buttons">
         <h2 class="text-lg-start">Update Item</h2>
         <div class="update-and-cancel">
-        <button type="submit" class="update-button btn btn-primary">Update</button>
+        <button type="submit" form="save-form" class="update-button btn btn-primary">Update</button>
           <a
                   th:href="@{/items}"
                   class="btn btn-danger"
@@ -35,6 +35,7 @@
         th:action="@{/items/save}"
         th:object="${item}"
         method="post"
+        id="save-form"
       >
         <div class="all-the-inputs">
         <input type="hidden" th:field="*{id}" readonly />

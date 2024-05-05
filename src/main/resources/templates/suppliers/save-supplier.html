@@ -21,7 +21,7 @@
       <div class="text-and-buttons">
         <h2 class="text-lg-start">Update Supplier</h2>
         <div class="update-and-cancel">
-        <button type="submit" class="update-button btn btn-primary">Update</button>
+        <button type="submit" form="save-form" class="update-button btn btn-primary">Update</button>
         <a
                 th:href="@{/suppliers}"
                 class="btn btn-danger"
@@ -35,6 +35,7 @@
         th:action="@{/suppliers/save}"
         th:object="${supplier}"
         method="post"
+        id="save-form"
       >
         <div class="both-halves">
         <div class="first-half">
