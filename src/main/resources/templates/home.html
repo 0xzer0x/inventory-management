@@ -1,0 +1,60 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Homepage</title>
+    <link
+            href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            media="all"
+            href="/static/css/home.css"
+    />
+</head>
+<body>
+<nav th:replace="~{fragments/header :: navbar('home')}"></nav>
+<div class="container page-container rounded-3">
+    <div><h2>Welcome, <span class="user-name" sec:authentication="name"></span>!</h2></div>
+<div class="all-buttons">
+    <div class="top-three">
+        <a
+                class="items-button btn btn-success"
+                th:href="@{/items}"
+        >
+            Items
+        </a>
+        <a
+                class="suppliers-button btn btn-info"
+                th:href="@{/suppliers}"
+        >
+            Suppliers
+        </a>
+    </div>
+    <div class="secondary-buttons">
+        <a
+                class="report-button btn btn-secondary"
+                href="https://github.com/0xzer0x/inventory-management"
+        >
+            Report a bug
+        </a>
+        <a
+                class="request-button btn btn-secondary"
+                href="https://github.com/0xzer0x/inventory-management"
+        >
+            Request a feature
+        </a>
+        <a
+                class="logout-button btn btn-danger"
+                th:href="@{/logout}"
+        >
+            Log out
+        </a>
+    </div>
+</div>
+</div>
+</body>
+</html>
