@@ -1,0 +1,36 @@
+.page-container {
+  background-color: #f8f9fa;
+  padding-bottom: 10px;
+}
+
+.title-and-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  margin-left: 28px;
+  margin-top: 10px;
+}
+
+.update-button {
+  margin-right: 10px;
+}
+
+.info-input {
+  height: 50px;
+}
+
+.all-the-inputs {
+  width: 100%;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.update-and-cancel {
+  display: inline-block;
+  margin-right: 29px;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+

@@ -1,0 +1,18 @@
+.page-container {
+  background-color: #f8f9fa;
+  padding-bottom: 10px;
+}
+.plus-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  color: white;
+  font-size: 35px;
+}
+
+h1 {
+  color: #000;
+}
+

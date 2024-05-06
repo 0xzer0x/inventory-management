@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Supplier List</title>
+    <link
+      href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+      href="/static/css/list.css"
+    />
+  </head>
+  <body>
+    <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>
+    <div class="container page-container rounded-3 p-3">
+      <div class="d-flex align-items-center">
+        <h1 class="me-3">Supplier List</h1>
+        <a
+          sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')"
+          th:href="@{/suppliers/save}"
+          class="btn btn-success plus-icon"
+        >
+          +
+        </a>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Items</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="supplier : ${suppliers}">
+            <td th:text="${supplier.id}"></td>
+            <td th:text="${supplier.name}"></td>
+            <td th:text="${supplier.email}"></td>
+            <td th:text="${supplier.phoneNumber}"></td>
+            <td>
+              <ul>
+                <li
+                  th:each="item : ${supplier.items}"
+                  th:text="${item.name}"
+                ></li>
+              </ul>
+            </td>
+            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              <a
+                class="btn btn-primary"
+                th:href="@{/suppliers/save(id=${supplier.id})}"
+              >
+                Update
+              </a>
+              <a
+                class="btn btn-danger"
+                sec:authorize="hasRole('ROLE_ADMIN')"
+                th:href="@{/suppliers/delete(id=${supplier.id})}"
+              >
+                Delete
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
+  </body>
+</html>
