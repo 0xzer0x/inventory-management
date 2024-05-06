@@ -32,7 +32,15 @@ To get started with the Inventory Management System, follow these steps:
 git clone https://github.com/0xzer0x/inventory-management.git
 ```
 
-2. **Build and Run with Docker Compose**
+2. **Build the Application JAR**
+
+You need to build the application JAR before building the container image. To build the executable JAR file, use the following Gradle command:
+
+```sh
+./gradlew bootJar
+```
+
+3. **Build and Run with Docker Compose**
 
 Navigate to the project directory and run the following command:
 
