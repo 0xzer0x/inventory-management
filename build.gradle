@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'io.fursan'
-version = '0.0.1'
+version = '0.1'
 
 java {
 	sourceCompatibility = '21'
