@@ -51,3 +51,27 @@ ALTER TABLE IF EXISTS supplier_items
 ADD CONSTRAINT fk_supplier_items_item_id FOREIGN KEY (items_id) REFERENCES item(id);
 ALTER TABLE IF EXISTS supplier_items
 ADD CONSTRAINT fk_supplier_items_supplier_id FOREIGN KEY (suppliers_id) REFERENCES supplier(id);
+
+-- Dummy Data Entry --
+
+-- -- Insert dummy data into the item table
+-- INSERT INTO item (unit_price, quantity, name) VALUES
+-- (10.99, 100, 'Item A'),
+-- (15.99, 200, 'Item B'),
+-- (20.99, 300, 'Item C'),
+-- (25.99, 400, 'Item D');
+--
+-- -- Insert dummy data into the supplier table
+-- INSERT INTO supplier (email, name, phone_number) VALUES
+-- ('supplier1@example.com', 'Supplier One', '123-456-7890'),
+-- ('supplier2@example.com', 'Supplier Two', '234-567-8901'),
+-- ('supplier3@example.com', 'Supplier Three', '345-678-9012'),
+-- ('supplier4@example.com', 'Supplier Four', '456-789-0123');
+--
+-- -- Insert dummy data into the supplier_items table to connect suppliers with items
+-- -- Assuming each supplier is connected to each item once
+-- INSERT INTO supplier_items (items_id, suppliers_id) VALUES
+-- (1, 1), (2, 1), (3, 1), (4, 1),
+-- (1, 2), (2, 2), (3, 2), (4, 2),
+-- (1, 3), (2, 3), (3, 3), (4, 3),
+-- (1, 4), (2, 4), (3, 4), (4, 4);
