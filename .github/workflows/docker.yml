@@ -18,6 +18,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
       - id: appver
         name: Set Application Version
         run: echo "app_ver=$(${{ github.workspace }}/gradlew properties -q | grep "version:" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
