@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
 
   app:
-    build: .
+    image: ghcr.io/0xzer0x/inventory-management:0.1
     depends_on:
       - db
     ports:
