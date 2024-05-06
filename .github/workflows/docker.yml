@@ -18,15 +18,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - id: appver
-        name: Set Application Version
-        run: echo "app_ver=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "21"
+
+      - id: appver
+        name: Set Application Version
+        run: echo "app_ver=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
       - name: Build Application JAR
         run: >-
