@@ -11,7 +11,7 @@
 
 This repository hosts an Inventory Management System built with Spring MVC, leveraging Thymeleaf for server-side rendering and Bootstrap for styling. The application is containerized using Docker, facilitating easy deployment and scalability. GitHub Actions is utilized for CI/CD pipelines, ensuring smooth integration and deployment processes.
 
-### 🛠️ Technology Stack
+### 🧰 Technology Stack
 
 - **Gradle**: Dependency management and build automation tool.
 - **Spring MVC**: Utilizes Spring MVC for robust backend logic.
@@ -32,15 +32,7 @@ To get started with the Inventory Management System, follow these steps:
 git clone https://github.com/0xzer0x/inventory-management.git
 ```
 
-2. **Build the Application JAR**
-
-You need to build the application JAR before building the container image. To build the executable JAR file, use the following Gradle command:
-
-```sh
-./gradlew bootJar
-```
-
-3. **Build and Run with Docker Compose**
+2. **Run with Docker Compose**
 
 Navigate to the project directory and run the following command:
 
@@ -48,7 +40,21 @@ Navigate to the project directory and run the following command:
 docker compose up
 ```
 
-This command will build the Docker images (if not already built) and start the containers. The application will be accessible at `http://localhost:8080`.
+This command will download the application Docker image and start the neccessary containers. The application will be accessible at `http://localhost:8080`.
+
+### 🛠️ Building from Source
+
+#### 📦 Dependencies
+
+- **Java 21 or Newer:** This project requires Java 21 or newer to compile and run. Ensure you have the appropriate JDK installed on your system.
+
+#### Build
+
+To build the project into an executable JAR file, use the following Gradle command:
+
+```sh
+./gradlew bootJar
+```
 
 ### ✅ Running Tests
 
