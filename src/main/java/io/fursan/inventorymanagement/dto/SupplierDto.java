@@ -23,7 +23,7 @@ public class SupplierDto {
 
   @Email private String email;
 
-  @NotNull(message = "Phone number cannot be empty")
+  @NotBlank(message = "Phone number cannot be empty")
   private String phoneNumber;
 
   private List<ItemDto> items;
