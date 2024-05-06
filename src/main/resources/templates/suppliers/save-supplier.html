@@ -1,33 +1,33 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Update Supplier</title>
-  <link
-          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
-          rel="stylesheet"
-  />
-  <link
-          rel="stylesheet"
-          type="text/css"
-          media="all"
-          href="/static/css/save-supplier.css"
-          />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Update Supplier</title>
+    <link
+      href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+      href="/static/css/save-supplier.css"
+    />
   </head>
   <body>
-<!--  <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>-->
-    <div class="container page-container rounded-3">
-      <div class="text-and-buttons">
+    <div class="container page-container rounded-3 mt-5">
+      <div class="text-and-buttons p-3">
         <h2 class="text-lg-start">Update Supplier</h2>
         <div class="update-and-cancel">
-        <button type="submit" form="save-form" class="update-button btn btn-primary">Update</button>
-        <a
-                th:href="@{/suppliers}"
-                class="btn btn-danger"
-        >
-          Cancel
-        </a>
+          <button
+            type="submit"
+            form="save-form"
+            class="update-button btn btn-primary"
+          >
+            Update
+          </button>
+          <a th:href="@{/suppliers}" class="btn btn-danger"> Cancel </a>
         </div>
       </div>
       <form
@@ -38,55 +38,55 @@
         id="save-form"
       >
         <div class="both-halves">
-        <div class="first-half">
-        <input type="hidden" th:field="*{id}" />
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input
-            type="text"
-            class="form-control info-input"
-            id="name"
-            th:field="*{name}"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input
-            type="email"
-            class="form-control info-input"
-            id="email"
-            th:field="*{email}"
-          />
-        </div>
-        <div class="form-group">
-          <label for="phoneNumber">Phone Number:</label>
-          <input
-            type="tel"
-            class="form-control info-input"
-            id="phoneNumber"
-            th:field="*{phoneNumber}"
-          />
-        </div>
-        </div>
+          <div class="first-half">
+            <input type="hidden" th:field="*{id}" />
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input
+                type="text"
+                class="form-control info-input"
+                id="name"
+                th:field="*{name}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                class="form-control info-input"
+                id="email"
+                th:field="*{email}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number:</label>
+              <input
+                type="tel"
+                class="form-control info-input"
+                id="phoneNumber"
+                th:field="*{phoneNumber}"
+              />
+            </div>
+          </div>
           <div class="second-half">
-        <div class="form-group">
-          <label for="items">Items:</label>
-          <select
-            class="form-control selectpicker"
-            id="items"
-            multiple
-            th:field="*{items}"
-          >
-            <option
-              th:each="item : ${items}"
-              th:value="${item.id}"
-              th:text="${item.name}"
-            >
-              Item Name
-            </option>
-          </select>
-        </div>
-        </div>
+            <div class="form-group">
+              <label for="items">Items:</label>
+              <select
+                class="form-control selectpicker"
+                id="items"
+                multiple
+                th:field="*{items}"
+              >
+                <option
+                  th:each="item : ${items}"
+                  th:value="${item.id}"
+                  th:text="${item.name}"
+                >
+                  Item Name
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
       </form>
     </div>
