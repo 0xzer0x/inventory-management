@@ -51,9 +51,9 @@
                 required
               />
               <div
-                      th:if="${#fields.hasErrors('name')}"
-                      th:text="${#fields.errors('name')[0]}"
-                      class="invalid-feedback"
+                th:if="${#fields.hasErrors('name')}"
+                th:text="${#fields.errors('name')[0]}"
+                class="invalid-feedback"
               >
                 Invalid input
               </div>
@@ -61,16 +61,16 @@
             <div class="form-group mb-3">
               <label for="email">Email</label>
               <input
-                type="email"
+                type="text"
                 class="form-control info-input"
                 id="email"
                 th:field="*{email}"
                 th:errorClass="${#fields.hasErrors('email') ? 'is-invalid' : _}"
               />
               <div
-                      th:if="${#fields.hasErrors('email')}"
-                      th:text="${#fields.errors('email')[0]}"
-                      class="invalid-feedback"
+                th:if="${#fields.hasErrors('email')}"
+                th:text="${#fields.errors('email')[0]}"
+                class="invalid-feedback"
               >
                 Invalid input
               </div>
@@ -86,9 +86,9 @@
                 required
               />
               <div
-                      th:if="${#fields.hasErrors('phoneNumber')}"
-                      th:text="${#fields.errors('phoneNumber')[0]}"
-                      class="invalid-feedback"
+                th:if="${#fields.hasErrors('phoneNumber')}"
+                th:text="${#fields.errors('phoneNumber')[0]}"
+                class="invalid-feedback"
               >
                 Invalid input
               </div>
@@ -98,9 +98,9 @@
             <div class="form-group">
               <label for="items">Items</label>
               <select
-                class="form-control selectpicker"
-                id="items"
                 multiple
+                id="items"
+                class="form-control selectpicker"
                 th:field="*{items}"
               >
                 <option

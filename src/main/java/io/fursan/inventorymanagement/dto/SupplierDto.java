@@ -2,7 +2,6 @@ package io.fursan.inventorymanagement.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,8 @@ public class SupplierDto {
   @NotBlank(message = "Name is required")
   private String name;
 
-  @Email private String email;
+  @Email(message = "Invalid email address")
+  private String email;
 
   @NotBlank(message = "Phone number cannot be empty")
   private String phoneNumber;
