@@ -39,37 +39,43 @@
       >
         <div class="all-the-inputs">
           <input type="hidden" th:field="*{id}" readonly />
-          <div class="form-group">
-            <label for="name">Name</label>
+          <div class="form-group mb-3">
+            <label class="form-label" for="name">Name</label>
             <input
               required
               type="text"
-              class="form-control info-input"
               id="name"
+              class="form-control info-input"
               th:field="*{name}"
+              th:errorClass="${#fields.hasErrors('name') ? 'is-invalid' : _}"
             />
             <div
               th:if="${#fields.hasErrors('name')}"
-              class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
-              th:errors="*{name}"
-            ></div>
+              th:text="${#fields.errors('name')[0]}"
+              class="invalid-feedback"
+            >
+              Invalid input
+            </div>
           </div>
-          <div class="form-group">
-            <label for="quantity">Quantity</label>
+          <div class="form-group mb-3">
+            <label class="form-label" for="quantity">Quantity</label>
             <input
               required
               type="number"
               class="form-control info-input"
               id="quantity"
               th:field="*{quantity}"
+              th:errorClass="${#fields.hasErrors('quantity') ? 'is-invalid' : _}"
             />
             <div
               th:if="${#fields.hasErrors('quantity')}"
-              class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
-              th:errors="*{quantity}"
-            ></div>
+              th:text="${#fields.errors('quantity')[0]}"
+              class="invalid-feedback"
+            >
+              Invalid input
+            </div>
           </div>
-          <div class="form-group">
+          <div class="form-group mb-3">
             <label for="unitPrice">Unit Price</label>
             <input
               required
@@ -78,12 +84,15 @@
               class="form-control info-input"
               id="unitPrice"
               th:field="*{unitPrice}"
+              th:errorClass="${#fields.hasErrors('unitPrice') ? 'is-invalid' : _}"
             />
             <div
               th:if="${#fields.hasErrors('unitPrice')}"
-              class="p-3 text-danger-emphasis bg-danger-subtle border rounded border-danger-subtle"
-              th:errors="*{unitPrice}"
-            ></div>
+              th:text="${#fields.errors('unitPrice')[0]}"
+              class="invalid-feedback"
+            >
+              Invalid input
+            </div>
           </div>
         </div>
       </form>
