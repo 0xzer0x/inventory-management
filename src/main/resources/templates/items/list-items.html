@@ -28,51 +28,73 @@
           +
         </a>
       </div>
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Suppliers</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="item : ${items}">
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.quantity}"></td>
-            <td th:text="${item.unitPrice}"></td>
-            <td>
-              <ul>
-                <li
-                  th:each="supplier : ${item.suppliers}"
-                  th:text="${supplier.name}"
-                ></li>
-              </ul>
-            </td>
-            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
-              <a
-                class="btn btn-primary"
-                th:href="@{/items/save(id=${item.id})}"
+      <div th:if="${items.size() > 0}">
+        <table class="table table-bordered table-hover table-responsive-xl">
+          <thead>
+            <tr>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/items', 'id', 'ID')}"
               >
-                Update
-              </a>
-              <a
-                class="btn btn-danger"
-                sec:authorize="hasRole('ROLE_ADMIN')"
-                th:href="@{/items/delete(id=${item.id})}"
+                ID
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/items', 'name', 'Name')}"
               >
-                Delete
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                Name
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/items', 'quantity', 'Quantity')}"
+              >
+                Quantity
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/items', 'unitPrice', 'Unit Price')}"
+              >
+                Unit Price
+              </th>
+              <th>Suppliers</th>
+              <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item : ${items}">
+              <td th:text="${item.id}"></td>
+              <td th:text="${item.name}"></td>
+              <td th:text="${item.quantity}"></td>
+              <td th:text="${item.unitPrice}"></td>
+              <td>
+                <ul>
+                  <li
+                    th:each="supplier : ${item.suppliers}"
+                    th:text="${supplier.name}"
+                  ></li>
+                </ul>
+              </td>
+              <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+                <a
+                  class="btn btn-primary"
+                  th:href="@{/items/save(id=${item.id})}"
+                >
+                  Update
+                </a>
+                <a
+                  class="btn btn-danger"
+                  sec:authorize="hasRole('ROLE_ADMIN')"
+                  th:href="@{/items/delete(id=${item.id})}"
+                >
+                  Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div th:unless="${items.size() > 0}">
+        <span>No items found!</span>
+      </div>
+      <nav th:replace="~{fragments/paging :: page-nav('/items')}"></nav>
     </div>
     <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
   </body>
