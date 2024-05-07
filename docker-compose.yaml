@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
     environment:
       DATASOURCE_URL: "jdbc:postgresql://db:5432/inventory-management"
       DATASOURCE_USERNAME: spring
