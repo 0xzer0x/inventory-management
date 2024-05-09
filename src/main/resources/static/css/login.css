@@ -60,5 +60,4 @@ input[type=password].input:focus {
 .error-sign {
     margin-top: 30px;
     margin-bottom: -30px;
-    background-color: black;
 }

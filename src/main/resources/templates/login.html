@@ -30,10 +30,10 @@
                 <i class="fa-solid fa-triangle-exclamation"></i> Incorrect username or password
               </div>
               <div
-                class="p-3 mt-4 text-warning-emphasis bg-warning-subtle border rounded border-danger-subtle"
+                class="p-3 text-warning-emphasis bg-warning-subtle border rounded border-danger-subtle error-sign"
                 th:if="${param.logout}"
               >
-                You have been logged out
+                <i class="fa-solid fa-circle-exclamation"></i> You have been logged out
               </div>
               <form th:action="@{/login}" method="post">
                 <div class="form-group mt-lg-4 shadow-none username-input">
