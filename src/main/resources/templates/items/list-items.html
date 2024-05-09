@@ -14,6 +14,7 @@
       media="all"
       href="/static/css/list.css"
     />
+    <link rel="stylesheet" href="/webjars/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
     <nav th:replace="~{fragments/header :: navbar('items')}"></nav>
@@ -25,7 +26,7 @@
           th:href="@{/items/save}"
           class="btn btn-success plus-icon"
         >
-          +
+          <i class="fa-solid fa-plus"></i>
         </a>
       </div>
       <table class="table table-bordered table-hover">
@@ -56,19 +57,25 @@
               </ul>
             </td>
             <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              <div class="both-buttons">
               <a
-                class="btn btn-primary"
+                title="Update"
+                class="option-buttons"
+                aria-hidden="true"
                 th:href="@{/items/save(id=${item.id})}"
               >
-                Update
+                <i class="fa-regular fa-pen-to-square option-buttons"></i>
               </a>
               <a
-                class="btn btn-danger"
+                title="Delete"
+                class="option-buttons"
+                aria-hidden="true"
                 sec:authorize="hasRole('ROLE_ADMIN')"
                 th:href="@{/items/delete(id=${item.id})}"
               >
-                Delete
+                <i class="fa-regular fa-trash-can option-buttons"></i>
               </a>
+              </div>
             </td>
           </tr>
         </tbody>
