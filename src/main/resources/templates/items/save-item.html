@@ -14,20 +14,21 @@
       media="all"
       href="/static/css/save-item.css"
     />
+    <link rel="stylesheet" href="/webjars/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
     <div class="container page-container rounded-3 mt-5">
       <div class="title-and-buttons p-3">
-        <h2 class="text-lg-start">Update Item</h2>
+        <h2 class="text-lg-start"><i class="fa-solid fa-pen-nib"></i> Update Item</h2>
         <div class="update-and-cancel">
           <button
             type="submit"
             form="save-form"
             class="update-button btn btn-primary"
           >
-            Update
+            <i class="fa-solid fa-check"></i> Update
           </button>
-          <a th:href="@{/items}" class="btn btn-danger"> Cancel </a>
+          <a th:href="@{/items}" class="btn btn-danger"> <i class="fa-solid fa-xmark"></i> Cancel </a>
         </div>
       </div>
       <form

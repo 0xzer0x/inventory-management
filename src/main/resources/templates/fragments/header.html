@@ -7,6 +7,8 @@
       href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    />
+    <link rel="stylesheet" href="/webjars/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <nav
     th:fragment="navbar(active)"
@@ -57,7 +59,12 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/logout" class="nav-link">Logout</a>
+            <a href="/logout"
+               class="nav-link"
+               style="font-size: 30px;"
+               title="Log out"
+            >
+              <i class="fas fa-sign-out-alt"></i></a>
           </li>
         </ul>
       </div>
