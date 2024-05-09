@@ -57,21 +57,25 @@
               </ul>
             </td>
             <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+              <div class="both-buttons">
               <a
-                class="btn btn-primary"
                 title="Update"
+                class="option-buttons"
+                aria-hidden="true"
                 th:href="@{/items/save(id=${item.id})}"
               >
-                <i class="fa-solid fa-pen-nib"></i>
+                <i class="fa-regular fa-pen-to-square option-buttons"></i>
               </a>
               <a
-                class="btn btn-danger"
                 title="Delete"
+                class="option-buttons"
+                aria-hidden="true"
                 sec:authorize="hasRole('ROLE_ADMIN')"
                 th:href="@{/items/delete(id=${item.id})}"
               >
-                <i class="fa-solid fa-trash"></i>
+                <i class="fa-regular fa-trash-can option-buttons"></i>
               </a>
+              </div>
             </td>
           </tr>
         </tbody>
