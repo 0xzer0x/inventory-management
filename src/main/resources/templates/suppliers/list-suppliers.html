@@ -66,10 +66,11 @@
                 <i class="fa-regular fa-pen-to-square option-buttons"></i>
               </a>
               <a
-                class="option-buttons"
+                class="option-buttons btn-delete"
                 title="Delete"
                 sec:authorize="hasRole('ROLE_ADMIN')"
                 th:href="@{/suppliers/delete(id=${supplier.id})}"
+                data-bs-toggle="modal" data-bs-target="#confirmModal"
               >
                 <i class="fa-regular fa-trash-can option-buttons"></i>
               </a>
@@ -79,6 +80,24 @@
         </tbody>
       </table>
     </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="confirmModalLabel">Delete Confirmation</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to remove supplier?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <a type="button" id="btnConfirm" class="btn btn-danger">Yes</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
+    <script src="/static/js/list.js"></script>
   </body>
 </html>
