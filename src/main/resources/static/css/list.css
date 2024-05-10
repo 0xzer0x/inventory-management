@@ -9,10 +9,21 @@
   width: 35px;
   height: 35px;
   color: white;
-  font-size: 35px;
+  font-size: 20px;
 }
 
 h1 {
   color: #000;
 }
 
+.option-buttons{
+  font-size: 30px;
+  color: #3e3c3c;
+  margin-right: 6px;
+  background: transparent;
+  border: none;
+}
+
+.both-buttons{
+  display: inline-flex;
+}

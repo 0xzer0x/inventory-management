@@ -16,6 +16,7 @@
       media="all"
       href="/static/css/home.css"
     />
+    <link rel="stylesheet" href="/webjars/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
     <nav th:replace="~{fragments/header :: navbar('home')}"></nav>
@@ -31,13 +32,13 @@
             class="items-button btn btn-success bg-gradient"
             th:href="@{/items}"
           >
-            Items
+            <i class="fa-solid fa-boxes-stacked"></i> Items
           </a>
           <a
             class="suppliers-button btn btn-primary bg-gradient"
             th:href="@{/suppliers}"
           >
-            Suppliers
+            <i class="fa-solid fa-truck-field"></i> Suppliers
           </a>
         </div>
         <div class="secondary-buttons">
@@ -46,20 +47,20 @@
             class="report-button btn btn-secondary bg-gradient"
             href="https://github.com/0xzer0x/inventory-management/issues"
           >
-            Report a bug
+            <i class="fa-solid fa-bug"></i> Report a bug
           </a>
           <a
             target="_blank"
             class="request-button btn btn-secondary bg-gradient"
             href="https://github.com/0xzer0x/inventory-management/issues"
           >
-            Request a feature
+            <i class="fa-solid fa-pen"></i> Request a feature
           </a>
           <a
             class="logout-button btn btn-danger bg-gradient"
             th:href="@{/logout}"
           >
-            Log out
+            <i class="fas fa-sign-out-alt"></i> Log out
           </a>
         </div>
       </div>
