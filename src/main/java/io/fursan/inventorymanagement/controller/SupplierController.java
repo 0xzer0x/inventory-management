@@ -2,6 +2,7 @@ package io.fursan.inventorymanagement.controller;
 
 import io.fursan.inventorymanagement.dto.ItemDto;
 import io.fursan.inventorymanagement.dto.SupplierDto;
+import io.fursan.inventorymanagement.entity.Supplier;
 import io.fursan.inventorymanagement.mapper.impl.ItemMapper;
 import io.fursan.inventorymanagement.mapper.impl.SupplierMapper;
 import io.fursan.inventorymanagement.service.ItemService;
@@ -9,6 +10,13 @@ import io.fursan.inventorymanagement.service.SupplierService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,10 +50,30 @@ public class SupplierController {
   }
 
   @GetMapping
-  public String getSuppliers(Model model) {
-    List<SupplierDto> supplierDtos =
-        supplierService.findAll().stream().map(supplierMapper::mapTo).toList();
-    model.addAttribute("suppliers", supplierDtos);
+  public String getSuppliers(Model model,@RequestParam(defaultValue = "1") int page,
+  @RequestParam(defaultValue = "6") int size,
+  @RequestParam(defaultValue = "id,asc") String[] sort) {
+    List<SupplierDto> supplierDtos ;
+    String sortField = sort[0];
+      String sortDirection = sort[1];
+      
+      Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+      Order order = new Order(direction, sortField);
+      
+      Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
+    Page<Supplier> pageSuppliers;
+    pageSuppliers = supplierService.findAll(pageable);
+    supplierDtos = pageSuppliers.getContent().stream().map(supplierMapper::mapTo).toList();
+      
+      model.addAttribute("suppliers", supplierDtos);
+      model.addAttribute("currentPage", pageSuppliers.getNumber() + 1);
+      model.addAttribute("totalItems", pageSuppliers.getTotalElements());
+      model.addAttribute("totalPages", pageSuppliers.getTotalPages());
+      model.addAttribute("pageSize", size);
+      model.addAttribute("sortField", sortField);
+      model.addAttribute("sortDirection", sortDirection);
+      model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+
     return "suppliers/list-suppliers";
   }
 

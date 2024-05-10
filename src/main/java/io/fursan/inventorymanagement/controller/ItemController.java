@@ -1,11 +1,19 @@
 package io.fursan.inventorymanagement.controller;
 
 import io.fursan.inventorymanagement.dto.ItemDto;
+import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.mapper.impl.ItemMapper;
 import io.fursan.inventorymanagement.service.ItemService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,9 +35,31 @@ public class ItemController {
   }
 
   @GetMapping
-  public String getAllItems(Model model) {
-    List<ItemDto> itemDtos = itemService.findAll().stream().map(itemMapper::mapTo).toList();
-    model.addAttribute("items", itemDtos);
+  public String getAllItems(Model model,
+    @RequestParam(defaultValue = "1") int page,
+    @RequestParam(defaultValue = "6") int size,
+    @RequestParam(defaultValue = "id,asc") String[] sort) {
+    List<ItemDto> itemDtos ;
+    String sortField = sort[0];
+      String sortDirection = sort[1];
+      
+      Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+      Order order = new Order(direction, sortField);
+      
+      Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
+    Page<Item> pageItems;
+    pageItems = itemService.findAll(pageable);
+    itemDtos = pageItems.getContent().stream().map(itemMapper::mapTo).toList();
+      
+      model.addAttribute("items", itemDtos);
+      model.addAttribute("currentPage", pageItems.getNumber() + 1);
+      model.addAttribute("totalItems", pageItems.getTotalElements());
+      model.addAttribute("totalPages", pageItems.getTotalPages());
+      model.addAttribute("pageSize", size);
+      model.addAttribute("sortField", sortField);
+      model.addAttribute("sortDirection", sortDirection);
+      model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+  
     return "items/list-items";
   }
 
