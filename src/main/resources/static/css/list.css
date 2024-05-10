@@ -20,6 +20,8 @@ h1 {
   font-size: 30px;
   color: #3e3c3c;
   margin-right: 6px;
+  background: transparent;
+  border: none;
 }
 
 .both-buttons{
