@@ -16,14 +16,14 @@
 >
   <ul class="pagination justify-content-center">
     <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-      <a th:replace="this :: paging(${endpoint}, 1, '<<', 'First Page')"></a>
+      <a th:replace="~{this :: paging(${endpoint}, 1, '<<', 'First Page')}"></a>
     </li>
     <li
       class="page-item font-weight-bold"
       th:classappend="${currentPage == 1} ? 'disabled'"
     >
       <a
-        th:replace="this :: paging(${endpoint}, ${currentPage - 1}, 'Prev', 'Previous Page')"
+        th:replace="~{this :: paging(${endpoint}, ${currentPage - 1}, 'Prev', 'Previous Page')}"
       ></a>
     </li>
     <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
@@ -35,7 +35,7 @@
       th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}"
     >
       <a
-        th:replace="this :: paging(${endpoint}, ${page}, ${page}, 'Page ' + ${page})"
+        th:replace="~{this :: paging(${endpoint}, ${page}, ${page}, 'Page ' + ${page})}"
       ></a>
     </li>
     <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
@@ -46,7 +46,7 @@
       th:classappend="${currentPage == totalPages} ? 'disabled'"
     >
       <a
-        th:replace="this :: paging(${endpoint}, ${currentPage + 1},'Next', 'Next Page')"
+        th:replace="~{this :: paging(${endpoint}, ${currentPage + 1},'Next', 'Next Page')}"
       ></a>
     </li>
     <li
@@ -54,7 +54,7 @@
       th:classappend="${currentPage == totalPages} ? 'disabled'"
     >
       <a
-        th:replace="this :: paging(${endpoint}, ${totalPages}, '>>', 'Last Page')"
+        th:replace="~{this :: paging(${endpoint}, ${totalPages}, '>>', 'Last Page')}"
       ></a>
     </li>
   </ul>
