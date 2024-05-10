@@ -14,6 +14,7 @@
       media="all"
       href="/static/css/list.css"
     />
+    <link rel="stylesheet" href="/webjars/font-awesome/6.5.2/css/all.min.css" />
   </head>
   <body>
     <nav th:replace="~{fragments/header :: navbar('suppliers')}"></nav>
@@ -25,55 +26,120 @@
           th:href="@{/suppliers/save}"
           class="btn btn-success plus-icon"
         >
-          +
+          <i class="fa-solid fa-plus"></i>
         </a>
       </div>
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Items</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="supplier : ${suppliers}">
-            <td th:text="${supplier.id}"></td>
-            <td th:text="${supplier.name}"></td>
-            <td th:text="${supplier.email}"></td>
-            <td th:text="${supplier.phoneNumber}"></td>
-            <td>
-              <ul>
-                <li
-                  th:each="item : ${supplier.items}"
-                  th:text="${item.name}"
-                ></li>
-              </ul>
-            </td>
-            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
-              <a
-                class="btn btn-primary"
-                th:href="@{/suppliers/save(id=${supplier.id})}"
+      <div th:if="${suppliers.size() > 0}">
+        <table class="table table-bordered table-hover table-responsive-xl">
+          <thead>
+            <tr>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/suppliers', 'id', 'ID')}"
               >
-                Update
-              </a>
-              <a
-                class="btn btn-danger"
-                sec:authorize="hasRole('ROLE_ADMIN')"
-                th:href="@{/suppliers/delete(id=${supplier.id})}"
+                ID
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/suppliers', 'name', 'Name')}"
               >
-                Delete
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                Name
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/suppliers', 'email', 'Email')}"
+              >
+                Email
+              </th>
+              <th
+                th:replace="~{fragments/sorting :: sorting('/suppliers', 'phoneNumber', 'Phone Number')}"
+              >
+                Phone Number
+              </th>
+              <th>Items</th>
+              <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="supplier : ${suppliers}">
+              <td th:text="${supplier.id}"></td>
+              <td th:text="${supplier.name}"></td>
+              <td th:text="${supplier.email}"></td>
+              <td th:text="${supplier.phoneNumber}"></td>
+              <td>
+                <ul>
+                  <li
+                    th:each="item : ${supplier.items}"
+                    th:text="${item.name}"
+                  ></li>
+                </ul>
+              </td>
+              <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
+                <div class="both-buttons">
+                  <a
+                    class="option-buttons"
+                    title="Update"
+                    th:href="@{/suppliers/save(id=${supplier.id})}"
+                  >
+                    <i class="fa-regular fa-pen-to-square option-buttons"></i>
+                  </a>
+                  <a
+                    class="option-buttons btn-delete"
+                    title="Delete"
+                    sec:authorize="hasRole('ROLE_ADMIN')"
+                    th:href="@{/suppliers/delete(id=${supplier.id})}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmModal"
+                  >
+                    <i class="fa-regular fa-trash-can option-buttons"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div th:unless="${suppliers.size() > 0}">
+        <span>No suppliers found!</span>
+      </div>
+      <nav th:replace="~{fragments/paging :: page-nav('/suppliers')}"></nav>
+    </div>
+    <div
+      class="modal fade"
+      id="confirmModal"
+      tabindex="-1"
+      aria-labelledby="confirmModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="confirmModalLabel">
+              Delete Confirmation
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to remove supplier?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              No
+            </button>
+            <a type="button" id="btnConfirm" class="btn btn-danger">Yes</a>
+          </div>
+        </div>
+      </div>
     </div>
     <script th:replace="~{fragments/footer :: bootstrap-js}"></script>
+    <script src="/static/js/list.js"></script>
   </body>
 </html>

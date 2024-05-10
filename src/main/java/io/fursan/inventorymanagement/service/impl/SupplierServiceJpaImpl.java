@@ -4,10 +4,11 @@ import io.fursan.inventorymanagement.entity.Item;
 import io.fursan.inventorymanagement.entity.Supplier;
 import io.fursan.inventorymanagement.repository.ItemRepository;
 import io.fursan.inventorymanagement.repository.SupplierRepository;
-import io.fursan.inventorymanagement.service.ItemService;
 import io.fursan.inventorymanagement.service.SupplierService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,8 @@ public class SupplierServiceJpaImpl implements SupplierService {
   private SupplierRepository supplierRepository;
   private ItemRepository itemRepository;
 
-  public SupplierServiceJpaImpl(SupplierRepository supplierRepository, ItemRepository itemRepository) {
+  public SupplierServiceJpaImpl(
+      SupplierRepository supplierRepository, ItemRepository itemRepository) {
     this.supplierRepository = supplierRepository;
     this.itemRepository = itemRepository;
   }
@@ -23,6 +25,11 @@ public class SupplierServiceJpaImpl implements SupplierService {
   @Override
   public List<Supplier> findAll() {
     return supplierRepository.findAll();
+  }
+
+  @Override
+  public Page<Supplier> findAll(Pageable pageable) {
+    return supplierRepository.findAll(pageable);
   }
 
   @Override

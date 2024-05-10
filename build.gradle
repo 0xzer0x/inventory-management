@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'io.fursan'
-version = '0.1'
+version = '0.2'
 
 java {
 	sourceCompatibility = '21'
@@ -31,6 +31,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.webjars:font-awesome:6.5.2'
   implementation 'org.modelmapper:modelmapper:3.2.0'
   implementation 'org.webjars:bootstrap:5.3.3'
 	compileOnly 'org.projectlombok:lombok'
