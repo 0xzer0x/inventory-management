@@ -7,6 +7,9 @@ import io.fursan.inventorymanagement.repository.SupplierRepository;
 import io.fursan.inventorymanagement.service.ItemService;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -72,5 +75,10 @@ public class ItemServiceJpaImpl implements ItemService {
               suppliers.forEach(itemSupplier -> itemSupplier.getItems().remove(item));
               itemRepository.deleteById(id);
             });
+  }
+
+  @Override
+  public Page<Item> findAll(Pageable pageable) {
+    return itemRepository.findAll(pageable);
   }
 }
