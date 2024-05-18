@@ -1,9 +1,12 @@
 name: Docker
 on:
   push:
-    branches: ["main"]
+    branches-ignore:
+      - "dev"
+      - "release/**"
     # Publish semver tags as releases.
-    tags: ["v*.*.*"]
+    tags:
+      - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
