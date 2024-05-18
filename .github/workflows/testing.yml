@@ -22,7 +22,6 @@ jobs:
 
       - name: Run Tests
         run: |
-          unset -e
           iter=0
           while ! "${{ github.workspace }}"/gradlew "-Dspring.test.context.failure.threshold=1000000" test --no-parallel; do
             iter=$(( iter + 1 ))
