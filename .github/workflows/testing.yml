@@ -22,6 +22,7 @@ jobs:
 
       - name: Run Tests
         run: |
+          sed "s/active:.*/active: testing/" -i "${{ github.workspace }}/src/main/resources/application.yml"
           iter=0
           while ! "${{ github.workspace }}"/gradlew "-Dspring.test.context.failure.threshold=1000000" test --no-parallel; do
             iter=$(( iter + 1 ))
