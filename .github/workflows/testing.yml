@@ -27,6 +27,6 @@ jobs:
           while ! "${{ github.workspace }}"/gradlew "-Dspring.test.context.failure.threshold=1000000" test --no-parallel; do
             iter=$(( iter + 1 ))
             if [[ "$iter" -ge "4" ]]; then
-              break
+              exit 1
             fi
           done
