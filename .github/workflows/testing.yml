@@ -1,0 +1,32 @@
+name: PR Testing
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - "main"
+      - "dev"
+jobs:
+  integration-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Run Tests
+        run: |
+          sed "s/active:.*/active: testing/" -i "${{ github.workspace }}/src/main/resources/application.yml"
+          iter=0
+          while ! "${{ github.workspace }}"/gradlew "-Dspring.test.context.failure.threshold=1000000" test --no-parallel; do
+            iter=$(( iter + 1 ))
+            if [[ "$iter" -ge "4" ]]; then
+              exit 1
+            fi
+          done
