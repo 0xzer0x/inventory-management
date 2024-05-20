@@ -2,6 +2,7 @@ name: Docker
 on:
   push:
     # Publish semver tags as releases.
+    workflow_dispatch:
     tags:
       - "v*.*.*"
 
