@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: inventory-management
+      POSTGRES_USER: spring
+      POSTGRES_PASSWORD: dummypassword
+    expose:
+      - 5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: on-failure
+
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 80:80
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://db:5432/inventory-management
+      DATASOURCE_USERNAME: spring
+      DATASOURCE_PASSWORD: dummypassword
+    restart: on-failure
+
+volumes:
+  db-data:
