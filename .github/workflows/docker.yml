@@ -1,4 +1,4 @@
-name: Docker
+name: Docker image deployment
 on:
   workflow_dispatch:
   push:
@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
     outputs:
       app_ver: "${{ steps.appver.outputs.app_ver }}"
@@ -19,32 +19,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
-
       - id: appver
         name: Set Application Version
-        run: echo "app_ver=$(${{ github.workspace }}/gradlew properties -q | grep "version:" | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-
-      - name: Build Application JAR
-        run: >-
-          sed "s/active:.*/active: prod/" -i "${{ github.workspace }}/src/main/resources/application.yml"
-
-          ${{ github.workspace }}/gradlew bootJar
-
-      - name: Upload JAR Artifact
-        uses: actions/upload-artifact@v4
-        env:
-          APP_VER: "${{ steps.appver.outputs.app_ver }}"
-        with:
-          name: "inventory-management-${{ env.APP_VER }}.jar"
-          path: "build/libs/inventory-management-${{ env.APP_VER }}.jar"
+        run: echo "app_ver=$(awk "/version =/ { gsub(/'/, \"\"); print \$3 }" ${{ github.workspace }}/build.gradle)" >> "$GITHUB_OUTPUT"
 
   deploy:
-    needs: build
+    needs: prepare
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -56,17 +36,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Create Artifact Download Path
-        run: mkdir -p "${{ github.workspace }}/build/libs"
-
-      - name: Download Application JAR
-        uses: actions/download-artifact@v4
-        env:
-          APP_VER: "${{ needs.build.outputs.app_ver }}"
-        with:
-          name: "inventory-management-${{ env.APP_VER }}.jar"
-          path: "${{ github.workspace }}/build/libs"
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -102,7 +71,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         env:
-          APP_VER: "${{ needs.build.outputs.app_ver }}"
+          APP_VER: "${{ needs.prepare.outputs.app_ver }}"
         with:
           driver-opts: image=moby/buildkit:buildx-stable-1
           context: .

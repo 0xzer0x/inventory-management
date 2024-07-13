@@ -13,7 +13,7 @@ services:
     restart: on-failure
 
   app:
-    image: ghcr.io/0xzer0x/inventory-management:0.2
+    build: .
     depends_on:
       - db
     ports:
